@@ -1,0 +1,168 @@
+{% extends 'blogPost/base2.html' %}
+
+{% load static %}
+{% block style_link %}
+	/static/blogPost/bloghomestyle.css
+{% endblock style_link %}
+
+{% block content %}
+
+<div class="container mb-3" style="margin-top:80px">
+	<div class="card">
+		<div class="card-body bg-warning rounded">
+			
+				<div class="d-flex justify-content-around">
+					<h5 class="display-4" style="position:relative;bottom:16px;border-bottom:3px solid white">{{ blog_view_username }}</h5>
+					<div class="d-flex flex-column">
+						<span style="font-weight:500;color:darkred">User since &nbsp; </span>
+						<span class="text-muted" style="font-weight:500" > {{date_joined|date:'d-F-Y'}}</span>
+					</div><!--flex-column-->
+				</div><!--flex column-->
+			
+		</div><!--card body-->
+	</div><!--card-->
+</div>
+
+<div style="width:100%;height:3.6px;border:0.6px solid orange;border-radius:10px;background:yellow">
+</div>
+
+
+
+{% if blog_list_published %}
+
+<h2 class="text-center mt-4" style="text-decoration: overline underline white;color:yellow">Published</h2>
+
+<div class="container mt-4 mb-4" id="blg_container">
+	{% for list in blog_list_published %}
+		<div class="card mt-3">
+			<div class="card-header" style="background:#ff1e56">
+				<div class="d-flex flex-column">
+					<div class="d-flex justify-content-between">
+						<h4>{{ blog_view_username }}</h4>
+						<p style="font-weight:500">at <small>{{list.date_publish|date:'h:i a |  d-m-Y'}}</small></p>
+					</div><!--justify content between-->
+					<span class="font-weight-bold" style="color:#ffe607">{{list.blog_title}}</span>
+				</div><!--d flex column-->
+			</div><!--card-header-->
+			<div class="card-body bg-light">
+
+				{% if list.blog_image %}
+					<div class="img_container">
+						<a href="#" onclick='img_show("{{ list.blog_image.url }}")' ><img src='{{ list.blog_image.url }}' id="blg_image" class="card-img-top rounded border"/></a>
+					</div><!--conatoner-->
+					<hr>
+				{% endif %}
+			
+				<article style="font-family:calibri;font-size:18px">{{list.blog_text|linebreaks}}</article>
+			</div><!--card body-->
+			
+		</div><!--card-->
+	{% endfor %}
+	
+</div><!--container-->
+
+<script>
+	
+	function img_show(img_url)
+	{
+		$("#img_link").attr("src",img_url)
+		$("#img_modal").modal("show")
+	}
+	
+</script>
+
+<div class="modal fade" id="img_modal">
+	<div class="modal-dialog modal-xl" id="img_modal_dialog">
+		<div class="modal-content">
+			<div class="modal-header" style="background:lightcyan">
+				<p id="demo"></p>
+				<button class="btn btn-outline-secondary mr-2 mx-auto" data-dismiss="modal">&times;</button>
+			</div><!--modal header-->
+			<div class="modal-body" style="background:#000">	
+				<div class="container">
+					<img src="" id="img_link" class="img-fluid rounded" style="object-fit: contain;position:relative;left:50%;transform: translateX(-50%);border:2px solid lightgrey"/>
+				</div><!--containwer-->
+			</div>
+		</div><!--modal-contetn-->
+	</div><!--modal dialog-->
+</div><!--modal-->
+
+{% else %}
+
+	<h2 class="text-center mt-2 mb-2 text-light" style="text-decoration: underline red">No Blogs published yet</h2>
+
+{% endif %}
+
+{% if blog_list_pending %}
+
+<div style="width:100%;height:3.6px;border:0.6px solid orange;border-radius:10px;background:yellow">
+</div>
+
+<h2 class="text-center mt-4 mb-4" style="text-decoration: overline underline white;color:yellow">Pending</h2>
+
+<div class="container" style="width:100%">
+	{% for pending_list in blog_list_pending %}
+		<div class="card mt-3">
+			<div class="card-header" style="background:#3d5f82">
+				<div class="d-flex flex-column text-white">
+					<div class="d-flex justify-content-between ">
+						<h5 style="color:#FFE607">{{ blog_view_username }}</h5>
+						<span><span style="color:#ff7866">on </span>- <small>{{pending_list.date_publish|date:"h:i a | d-F-Y"}}</small></span>
+					</div><!--justify content between-->
+					<div class="d-flex justify-content-between">
+						<p style="width:500px">{{pending_list.blog_title}}</p>
+						<div class="d-flex flex-column">
+							<span style="color:#ff7866">Created at</span>
+							<span><small>{{pending_list.date_created|date:"h:i a | d-F-Y"}}</small></span>
+						</div>
+					</div>
+				</div><!--d flex column-->
+			</div><!--card-header-->
+		</div><!--card-->
+	{% endfor %}
+</div><!--container-->
+
+{% endif %}
+
+{% if blog_list_published or blog_list_pending %}
+<footer >
+	<div class="jumbotron-fluid mt-5">
+		<div class="d-flex flex-column">
+		<h5 class="text-center"><span style="color:red">&copy;</span>&nbsp;&nbsp;2020-{{present_year}}</h5>
+		<p class="text-center" style="color:white">@ Blogger_Ways</p>
+		</div>
+	</div><!--jumbotron-fluid-->
+</footer>
+
+{% else %}
+
+<footer >
+	<div class="jumbotron-fluid mt-5 fixed-bottom">
+		<div class="d-flex flex-column">
+		<h5 class="text-center"><span style="color:red">&copy;</span>&nbsp;&nbsp;2020-{{present_year}}</h5>
+		<p class="text-center" style="color:white">@ Blogger_Ways</p>
+		</div>
+	</div><!--jumbotron-fluid-->
+</footer>
+
+{% endif %}
+
+<script>
+	$(function(){
+		$(".logo_1").hover(function(){
+			$(this).css({"color":"#1783b5",'text-decoration':'none'})
+		},function(){
+			$(this).css("color"," #17a1b7")
+		});
+	});
+
+	$(function(){
+		$(".logo_2").hover(function(){
+			$(this).css({"color":"#fff607",'text-decoration':'none'})
+		},function(){
+			$(this).css("color","#FFC107")
+		});
+	});
+</script>
+
+{% endblock content %}

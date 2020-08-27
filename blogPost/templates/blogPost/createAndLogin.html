@@ -1,0 +1,43 @@
+{% extends 'blogPost/base1.html' %}
+
+
+{% block create_login %}
+<div class="jumbotron-fluid mb-5">
+	<h2 class="display=2">Blogger_Ways</h2>
+</div><!--jumotron-->
+
+<div class="container mt-5 mb-5">
+	<div class="row">
+		<div class="col-md mt-4">
+			<div class="card">
+				<div class="card-header bg-warning">
+					<h2 class="card-title">Create Account</h2>
+				</div><!--card-header-->
+				<div class="card-body mx-auto">
+					<form method = "post" action='.'>
+						{% csrf_token %}
+						{{ form1.as_p }}
+						<button type="submit" name="c_submit" class="btn btn-success btn-block">Create</button>
+					</form>
+				</div><!--card-body-->
+			</div><!--card-->
+		</div><!--col-->
+		<div class="col-md mt-4">
+			<div class="card">
+				<div class="card-header bg-warning">
+					<h2 class="card-title">Log In</h2>
+				</div><!--card-header-->
+				<div class="card-body mx-auto">
+					<form method = "post" action='.'>
+						{% if error_message %}<ul><li>{{error_message}}</li></ul>{% endif %}
+						{% csrf_token %}
+						{{ form2.as_p }}
+						<button type="submit" name="l_submit " class="btn btn-success btn-block">Log In</button>
+					</form>
+				</div><!--card-body-->
+			</div><!--card-->
+		</div><!--col-->
+	</div><!--row-->
+</div><!--container-->
+
+{% endblock create_login %}

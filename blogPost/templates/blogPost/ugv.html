@@ -1,0 +1,33 @@
+<div class="container mb-3" style="margin-top:100px">
+	{% for list in blog_list %}
+		<div class="card mt-2">
+			<div class="card-header bg-warning">
+				<div class="d-flex flex-column">
+					<div class="d-flex justify-content-between">
+						<a href="#"style="color:#d10c40">{{list.user}}</a>
+						<p>- <small><span class="text-muted font-weight-bold" >{{list.date_publish|date:'h:i a | d-m-Y'}}</span></small></p>
+					</div><!--d flex-->
+					<p>{{ list.blog_title|linebreaks }}</p>
+				</div><!--felx column-->
+			</div><!--card-header-->
+			<div class="card-body bg-light">
+				<p class="lead">{{ list.blog_text |linebreaks}}</p>
+			</div><!--card body-->
+		</div><!--card-->
+	{% endfor %}
+</div><!--container-->
+
+
+
+<!--<a href="{% url 'editBlog' list.id %}" class="logo_1" style="color:#17a1b7"><i class="fa fa-edit"></i>
+						Edit</a>-->
+
+
+
+						'''def blog_editProfile_page_view(request,get_user_id):
+	get_blog = get_object_or_404(Blog_Post,id = request.session['temp_edit_blog_id'])
+	form = Blog_edit_Form(request.POST or None, instance = get_blog)
+	if form.is_valid():
+		form.save()
+	context = {'form':form,'title':f'Update : {get_blog.blog_title}','present_year':timezone.localtime().year} 
+	return render(request,'blogPost/blog_edit.html',context)'''

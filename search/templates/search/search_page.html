@@ -1,0 +1,145 @@
+{% extends 'blogPost/base2.html' %}
+
+{% block content %}
+
+	{% if found_blog_list %}
+		<div class="container mb-5" style="margin-top:80px;width:90%">
+			<div class="media p-3 rounded " style="background:PapayaWhip">
+				<div class="media-body">
+					<div class="d-flex flex-column">
+						<div class="d-flex">
+							<h3 class="text-muted">Query </h3><span class="text-muted" style="position:relative;font-weight:550;top:6px;"><b> &nbsp;&nbsp;: </b></span> 
+							<h5 class="ml-2" style="position:relative;top:7.5px;font-family:calibri;font-weight:550;color:#4f292a"> {{ query }} </h5>
+						</div><!--d flex-->
+						<div class="row mt-3">
+							<div class="col-sm-8">
+								<p><b><span class="text-muted" style="font-size:18px">Status :</span></b> <span class="text-success" style="color:;font-weight:500">Successfully found results for your query</span></p>
+
+							</div><!--col-sm-->
+							<div class="col-sm-4">
+								<p class="font-weight-bold text-primary"  > ~ <span class="text-dark">{{ num_of_items }}</span> result{{ num_of_items|pluralize }} found matching your query</p>
+							</div><!--col-sm-->
+						</div><!--row-->
+						<div class="row">
+							<div class="col-sm-8">
+								<p class="font-weight-bold text-warning">This query is searched <span class="text-dark">{{ num_of_times_item_searched }}</span> time{{ num_of_times_item_searched|pluralize }} by users</p>
+							</div><!--col-sm-->
+							<div class="col-sm-4">
+								<p class="text-info font-weight-bold">
+									{{ search_frequency_text }}
+								</p>
+							</div><!--col-sm-->
+						</div><!--row-->
+					</div><!--flex column-->
+				</div><!--media body-->
+			</div><!--media-->
+		</div><!--container-->
+		<div class="container" id="blg_container">
+				{% for list in found_blog_list %}
+					<div class="card mt-2">
+						<div class="card-header bg-warning">
+							<div class="d-flex flex-column">
+								<div class="d-flex justify-content-between">
+
+									<form method="post" action='{% url "svProfile" %}'>
+										
+										{% csrf_token %}
+										<button class="post_user_link" name="view_profile" value="{{list.user.id}}" type="submit">{{list.user}}</button>
+										
+									</form>
+
+									<p>- <small><span class="text-muted font-weight-bold" >{{list.date_publish|date:'h:i a | d-m-Y'}}</span></small></p>
+								</div><!--d flex-->
+								<span style="font-weight:600;color:purple">{{ list.blog_title|linebreaks }}</span>
+							</div><!--felx column-->
+						</div><!--card-header-->
+						<div class="card-body bg-light">
+
+							{% if list.blog_image %}
+								<div class="img_container">
+									<a href="#" onclick='img_show("{{ list.blog_image.url }}")' ><img src='{{ list.blog_image.url }}' id="blg_image" class="card-img-top rounded border"/></a>
+								</div><!--conatoner-->
+								<hr>
+							{% endif %}
+							<article style="font-family:calibri;">{{ list.blog_text|linebreaks}}</article>
+						</div><!--card body-->
+					</div><!--card-->
+				{% endfor %}
+		
+		</div>
+
+<script>
+
+	function img_show(img_url)
+	{
+		$("#img_link").attr("src",img_url)
+		$("#img_modal").modal("show")
+	}
+
+</script>
+
+<div class="modal fade" id="img_modal">
+	<div class="modal-dialog modal-xl" id="img_modal_dialog">
+		<div class="modal-content">
+			<div class="modal-header" style="background:lightcyan">
+				<p id="demo"></p>
+				<button class="btn btn-outline-secondary mr-2 mx-auto" data-dismiss="modal">&times;</button>
+			</div><!--modal header-->
+			<div class="modal-body" style="background:#000">	
+				<div class="container">
+					<img src="" id="img_link" class="img-fluid rounded" style="object-fit: contain;position:relative;left:50%;transform: translateX(-50%);border:2px solid lightgrey"/>
+				</div><!--containwer-->
+			</div>
+		</div><!--modal-contetn-->
+	</div><!--modal dialog-->
+</div><!--modal-->
+
+	{% elif not found_blog_list %}
+		<div class="container" style="margin-top:150px">
+			<div class="media p-3 rounded " style="background:PapayaWhip">
+				<div class="media-body">
+					<div class="d-flex flex-column">
+						<div class="d-flex">
+							<h3 class="text-muted">Query </h3><span class="text-muted" style="position:relative;font-weight:550;top:6px;"><b> &nbsp;&nbsp;: </b></span> 
+							<h5 class="ml-2" style="position:relative;top:7.5px;font-family:calibri;font-weight:550;color:#4f292a"> {{ query }} </h5>
+						</div><!--d flex-->
+						<div class="row mt-3">
+							<div class="col-sm-8">
+								<p><b><span class="text-muted" style="font-size:18px">Status :</span></b> <span class="text-danger" style="color:;font-weight:500">Sorry No results found Matching your Query</span></p>
+
+							</div><!--col-sm-->
+							<div class="col-sm-4">
+								<p class="font-weight-bold text-primary"  > ~ <span class="text-dark">0</span> result{{ num_of_items|pluralize }} found matching your query</p>
+							</div><!--col-sm-->
+						</div><!--row-->
+					</div><!--flex column-->
+				</div><!--media body-->
+			</div><!--media-->
+		</div><!--container-->
+
+	{% endif %}
+
+
+	{% if found_blog_list  %} <!-- if blog were found and number of blogs found is greater than one -->
+		<footer>
+			<div class="jumbotron-fluid mt-5 ">
+				<div class="d-flex flex-column">
+					<h5 class="text-center"><span style="color:red">&copy;</span>&nbsp;&nbsp;2020-{{present_year}}</h5>
+					<p class="text-center" style="color:white">@ Blogger_Ways</p>
+				</div>
+			</div><!--jumbotron-fluid-->
+		</footer>
+
+	{% else %}<!--IF blogs were not found-->
+		<footer>
+			<div class="jumbotron-fluid mt-5 fixed-bottom">
+				<div class="d-flex flex-column">
+					<h5 class="text-center"><span style="color:red">&copy;</span>&nbsp;&nbsp;2020-{{present_year}}</h5>
+					<p class="text-center" style="color:white">@ Blogger_Ways</p>
+				</div>
+			</div><!--jumbotron-fluid-->
+		</footer>
+	{% endif %}
+
+
+{% endblock content %}
