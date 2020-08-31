@@ -1,1 +1,1 @@
-web: python server.py
+web: waitress-serve --port=80 ACE:wsgi.application
