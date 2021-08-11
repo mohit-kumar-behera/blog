@@ -30,7 +30,7 @@ def blog_create_log_view(request):
 					request.session['sessPassword'] = password
 					return redirect("home")
 				else:
-					error_message = 'Account Doen\'t Exist\nCreate a new one!'
+					error_message = 'Account Doesn\'t Exist\nCreate a new one!'
 					context = {'form1':form1,'form2':form2,'error_message':error_message}
 					return render(request,'blogPost/createAndLogin.html',context)
 				form2 = Login_UserForm()	
