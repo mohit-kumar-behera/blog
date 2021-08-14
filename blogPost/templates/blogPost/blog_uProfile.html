@@ -1,9 +1,5 @@
 {% extends 'blogPost/base2.html' %}
-
-
-
 {% block content %}
-
 <div class="container mb-3" style="margin-top:80px">
 	<div class="card">
 		<div class="card-body bg-warning rounded">
@@ -18,10 +14,10 @@
 				<div class="d-flex flex-column ">
 					<a href="{% url 'postBlog' %}"><button type="button" class="btn btn-success">POST <small><span style="color:lightgreen"><i>@Blogger_Ways</i></span></small></button></a>
 					<button type="button" data-toggle="modal" data-target="#Logoutmodal" class="btn btn-danger mt-2">Log Out</button>
-				</div><!--flex column-->
-			</div><!--d-flex-->
-		</div><!--card body-->
-	</div><!--card-->
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div style="width:100%;height:3.6px;border:0.6px solid orange;border-radius:10px;background:yellow">
@@ -33,7 +29,7 @@
 			<div class="modal-header bg-info">
 				<h4 class="lead text-light">Log Out</h4>
 				<button class="close" data-dismiss="modal">&times;</button>
-			</div><!--modal header-->
+			</div>
 			<div class="modal-body" style="height:150px">
 				<div class="d-flex justify-content-center mt-4">
 					<button class="btn btn-outline-primary mr-2" data-dismiss="modal">Close</button>
@@ -43,9 +39,9 @@
 					</form>
 				</div>
 			</div>
-		</div><!--modal content-->
-	</div><!--modal dialog-->
-</div><!--modal-->
+		</div>
+	</div>
+</div>
 
 <div class="modal fade" id="deletemodal">
 	<div class="modal-dialog" style="margin-top:15%">
@@ -55,7 +51,7 @@
 					<h4 class="lead text-light">Delete Post</h4>
 					<p class="text-warning font-weight-bold" id="titlehead"></p>
 				</div>
-			</div><!--modal header-->
+			</div>
 			<div class="modal-body" style="height:150px">
 				<div class="d-flex justify-content-center mt-4">
 					<button class="btn btn-outline-primary mr-2" data-dismiss="modal">Close</button>
@@ -66,24 +62,24 @@
 					</form>
 				</div>
 			</div>
-		</div><!--modal content-->
-	</div><!--modal dialog-->
-</div><!--modal-->
+		</div>
+	</div>
+</div>
 
 <div class="modal fade" id="img_modal">
 	<div class="modal-dialog modal-xl" id="img_modal_dialog">
 		<div class="modal-content">
 			<div class="modal-header" style="background:lightcyan">
 				<button class="btn btn-outline-secondary mr-2 mx-auto" data-dismiss="modal">&times;</button>
-			</div><!--modal header-->
+			</div>
 			<div class="modal-body" style="background:#000">	
 				<div class="container">
 					<img src="" id="img_link" class="img-fluid rounded" style="object-fit: contain;position:relative;left:50%;transform: translateX(-50%);border:2px solid lightgrey"/>
-				</div><!--containwer-->
+				</div>
 			</div>
-		</div><!--modal-contetn-->
-	</div><!--modal dialog-->
-</div><!--modal-->
+		</div>
+	</div>
+</div>
 
 {% if blog_list_published %}
 
@@ -97,20 +93,20 @@
 					<div class="d-flex justify-content-between">
 						<h5>Self</h5>
 						<p style="font-weight:500">at <small>{{list.date_publish|date:'h:i a |  d-m-Y'}}</small></p>
-					</div><!--justify content between-->
+					</div>
 					<span class="font-weight-bold" style="color:#ffe607">{{list.blog_title}}</span>
-				</div><!--d flex column-->
-			</div><!--card-header-->
+				</div>
+			</div>
 			<div class="card-body bg-light">
 
 				{% if list.blog_image %}
 					<div class="img_container">
 						<a href="#" onclick='img_show("{{ list.blog_image.url }}")' ><img src='{{ list.blog_image.url }}' id="blg_image" class="card-img-top rounded border"/></a>
-					</div><!--conatoner-->
+					</div>
 					<hr>
 				{% endif %}
 				<article style="font-family:calibri;">{{list.blog_text|linebreaks}}</article>
-			</div><!--card body-->
+			</div>
 			<div class="card-footer" style="height:45px;background:lightyellow" >
 				<div class="d-flex justify-content-around" style="">
 
@@ -119,19 +115,13 @@
 						<button type="submit" name="edit_blog" class='logo_1' style="background:transparent;color:#17a1b7;border:none;outline:none" value="{{list.id}}"><i class="fa fa-edit"></i>
 						Edit</button>
 					</form>
-
-					
 					<a href="#" class="logo_1" id="deleteopenmodal" onclick="delete_blog( '{{ list.id }}','{{ list.blog_title }}')" style="color:#17a1b7"><i class="fa fa-trash"></i>
 						Delete</a>
-						
-
-
-				</div><!--d flex-->
-			</div><!--card footer-->
-		</div><!--card-->
+				</div>
+			</div>
+		</div>
 	{% endfor %}
-	
-</div><!--container-->
+</div>
 
 <script>
 	function delete_blog(blog_id,blog_title)
@@ -159,9 +149,7 @@
 </script>
 
 {% else %}
-
 	<h2 class="text-center mt-2 mb-2 text-light" style="text-decoration: underline red">No Blogs published yet</h2>
-
 {% endif %}
 
 {% if blog_list_pending %}
@@ -179,7 +167,7 @@
 					<div class="d-flex justify-content-between ">
 						<h5 style="color:#FFE607">Self</h5>
 						<span><span style="color:#ff7866">on </span>- <small>{{pending_list.date_publish|date:"h:i a | d-F-Y"}}</small></span>
-					</div><!--justify content between-->
+					</div>
 					<div class="d-flex justify-content-between">
 						<p style="width:500px">{{pending_list.blog_title}}</p>
 						<div class="d-flex flex-column">
@@ -187,7 +175,7 @@
 							<span><small>{{pending_list.date_created|date:"h:i a | d-F-Y"}}</small></span>
 						</div>
 					</div>
-				</div><!--d flex column-->
+				</div>
 				<div class="d-flex justify-content-around" style="">
 
 					<form method="post" action="{% url 'uProfile' %}">
@@ -198,11 +186,11 @@
 					
 					<a href="#" class="logo_2" id="deleteopenmodal" onclick="delete_blog('{{pending_list.id}}','{{pending_list.blog_title}}')" style="color:#FFC107"><i class="fa fa-trash"></i>
 						Delete</a>
-				</div><!--d flex-->
-			</div><!--card-header-->
-		</div><!--card-->
+				</div>
+			</div>
+		</div>
 	{% endfor %}
-</div><!--container-->
+</div>
 
 {% endif %}
 
@@ -213,7 +201,7 @@
 		<h5 class="text-center"><span style="color:red">&copy;</span>&nbsp;&nbsp;2020-{{present_year}}</h5>
 		<p class="text-center" style="color:white">@ Blogger_Ways</p>
 		</div>
-	</div><!--jumbotron-fluid-->
+	</div>
 </footer>
 
 {% else %}
@@ -224,7 +212,7 @@
 		<h5 class="text-center"><span style="color:red">&copy;</span>&nbsp;&nbsp;2020-{{present_year}}</h5>
 		<p class="text-center" style="color:white">@ Blogger_Ways</p>
 		</div>
-	</div><!--jumbotron-fluid-->
+	</div>
 </footer>
 
 {% endif %}
@@ -246,7 +234,5 @@
 		});
 	});
 </script>
-
-
 
 {% endblock content %}
