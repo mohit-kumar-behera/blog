@@ -1,8 +1,4 @@
 {% extends 'blogPost/base2.html' %}
-
-<!-- giving the styling link -->
-
-
 {% block content %}
 <div class="container mb-3" style="margin-top:100px">
 	<div class="row">
@@ -13,19 +9,15 @@
 						<div class="card-header bg-warning">
 							<div class="d-flex flex-column">
 								<div class="d-flex justify-content-between">
-
 									<form method="post" action='.'>
 										{% csrf_token %}
-										<button class="post_user_link" name="view_profile" value="{{list.user.id}}" type="submit">{{list.user}}</button>
-										
+										<button class="post_user_link" name="view_profile" value="{{list.user.id}}" type="submit">{{list.user}}</button>	
 									</form>
-
-
 									<p>- <small><span class="text-muted font-weight-bold" >{{list.date_publish|date:'h:i a | d-m-Y'}}</span></small></p>
-								</div><!--d flex-->
+								</div>
 								<span style="font-weight:600;color:purple">{{ list.blog_title|linebreaks }}</span>
-							</div><!--felx column-->
-						</div><!--card-header-->
+							</div>
+						</div>
 						<div class="card-body bg-light">
 							{% if list.blog_image %}
 								<div class="img_container">
@@ -33,48 +25,43 @@
 								</div>
 								<hr>
 							{% endif %}
-							
 							<article style="font-family:calibri;">{{ list.blog_text|linebreaks}}</article>
-						</div><!--card body-->
-					</div><!--card-->
+						</div>
+					</div>
 				{% endfor %}
-			</div><!--col-->
+			</div>
 		{% else %}
 			<div class='col-md-8 mt-3'>
 				<div class="card align-items-center mt-2">
 					<h2 class="text-muted">No Blogs Publication are there in present</h2>
 					<span style="color:grey"><span style="color:lightgrey">@</span>Bloggers_Ways</span>
-				</div><!--card-->
-			</div><!--col-->
+				</div>
+			</div>
 		{% endif %}
-
 
 		{% if blog_pending_list %}<!--if some pending blogs are there-->
 			<div class="col-md-4 mt-4 pb-2" style="max-height:750px;overflow-y:scroll;padding-bottom:5px">
 				<div class="d-flex justify-content-between">
 					<h2 class="text-muted">Coming Soon</h2>
 					<small style="color:#FFC107;position:relative;top:16.5px"><i>@</i>Bloggers_Ways</small>
-				</div><!--d flex-->
+				</div>
 				{% for pending_list in blog_pending_list %}
 					<div class="card mt-2 bg-warning" style="border-left:4px solid red;">
 						<div class="card-header" style="background:#3d5f82">
 							<div class="d-flex flex-column text-white">
 								<div class="d-flex justify-content-between ">
-
 									<form method="post" action='.'>
 										{% csrf_token %}
 										<button class="post_user_link_2" name="view_profile" value="{{pending_list.user.id}}" type="submit">{{pending_list.user}}</button>
-										
 									</form>
-				
 									<span><span style="color:#ff7866">on </span>- <small>{{pending_list.date_publish|date:"h:i a | d-F-Y"}}</small></span>
-								</div><!--justify content between-->
+								</div>
 								<div class=" justify-content-between">
 									<p style="width:500px">{{pending_list.blog_title|linebreaks}}</p>
 								</div>
-							</div><!--d flex column-->
-						</div><!--card-header-->
-					</div><!--card-->
+							</div>
+						</div>
+					</div>
 				{% endfor %}
 			</div>
 		{% else %}<!-- if no pending blogs are there-->
@@ -83,22 +70,18 @@
 					<h2 class="text-muted">No Future Blogs Publication are there</h2>
 					<span class="text-danger" style="font-size:20px">All are published</span>
 					<span style="color:grey"><span style="color:lightgrey"><i>@</i></span>Bloggers_Ways</span>
-				</div><!--card-->
-			</div><!--col-->
+				</div>
+			</div>
 		{% endif %}
-	</div><!--row-->
-</div><!--container-->
+	</div>
+</div>
 
 <script>
-
-	function img_show(img_url)
-	{
+	function img_show(img_url) {
 		$("#img_link").attr("src",img_url)
 		$("#img_modal").modal("show")
 	}
-
 </script>
-
 
 <div class="modal fade" id="img_modal">
 	<div class="modal-dialog modal-xl" id="img_modal_dialog">
@@ -106,25 +89,22 @@
 			<div class="modal-header" style="background:lightcyan">
 				<p id="demo"></p>
 				<button class="btn btn-outline-secondary mr-2 mx-auto" data-dismiss="modal">&times;</button>
-			</div><!--modal header-->
+			</div>
 			<div class="modal-body" style="background:#000">	
 				<div class="container">
 					<img src="" id="img_link" class="img-fluid rounded" style="object-fit: contain;position:relative;left:50%;transform: translateX(-50%);border:2px solid lightgrey"/>
-				</div><!--containwer-->
+				</div>
 			</div>
-		</div><!--modal-contetn-->
-	</div><!--modal dialog-->
-</div><!--modal-->
+		</div>
+	</div>
+</div>
 
-
-
-
-<footer >
+<footer>
 	<div class="jumbotron-fluid mt-5">
 		<div class="d-flex flex-column">
 		<h5 class="text-center"><span style="color:red">&copy;</span>&nbsp;&nbsp;2020-{{year}}</h5>
 		<p class="text-center" style="color:white">@ Blogger_Ways</p>
 		</div>
-	</div><!--jumbotron-fluid-->
+	</div>
 </footer>
 {% endblock content %}
