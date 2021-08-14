@@ -121,20 +121,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-LOCAL_CDN_PATH = os.path.join(os.path.dirname(BASE_DIR),'static_cdn_test')
-
-STATIC_ROOT = os.path.join(LOCAL_CDN_PATH,'static/')
-
-MEDIA_ROOT = os.path.join(LOCAL_CDN_PATH,'media/')
-
 MEDIA_URL = '/media/'
 
 STATIC_FILES_DIR = [
-    os.path.join(BASE_DIR,'staticfiles'),
-    '/var/www/static/',
+    os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR, 'media')
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR,'static/media')
 
-# ALLOWED_HOSTS = ['192.168.43.78']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

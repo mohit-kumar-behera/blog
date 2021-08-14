@@ -21,8 +21,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('blogs/',include('blogPost.urls')),
-    path('blogs/',include('blogProfile.urls')),
+    path('',include('blogPost.urls')),
+    path('user/',include('blogProfile.urls')),
     path('blogs/',include('search.urls'))
 ]
 
