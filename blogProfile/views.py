@@ -35,7 +35,7 @@ def blog_uProfile_page_view(request):
 		if 'edit_blog' in request.POST:
 			edit_blog_id = request.POST.get('edit_blog')
 			request.session['temp_edit_blog_id'] = edit_blog_id
-			return redirect('edit_Blog',permanent = True)
+			return redirect('blogProfile:edit_Blog',permanent = True)
 			
 			
 		context = {'blog_list_published':blog_list_published,'blog_list_pending':blog_list_pending,'blog_username':request.session['sessUsername'],'date_joined':get_user_joined_date,'present_year':timezone.localtime().year}
@@ -45,14 +45,14 @@ def blog_edit_page_view(request):
 	try:
 		request.session['temp_edit_blog_id']
 	except:
-		return redirect('uProfile')
+		return redirect('blogProfile:uProfile')
 	else:
-		get_blog = get_object_or_404(Blog_Post,id = request.session['temp_edit_blog_id'])
+		get_blog = get_object_or_404(Blog_Post, id=request.session['temp_edit_blog_id'])
 		form = Blog_edit_Form(request.POST or None, request.FILES or None, instance = get_blog)
 		if form.is_valid():
 			form.save()
 			del request.session['temp_edit_blog_id']
-			return redirect("uProfile",permanent = True)
+			return redirect("blogProfile:uProfile",permanent = True)
 		context = {'form':form,'title':f'Update : {get_blog.blog_title}','present_year':timezone.localtime().year} 
 		return render(request,'blogPost/blog_edit.html',context)
 
@@ -71,11 +71,25 @@ def blog_post_page_view(request):
 				get_date_publish = timezone.localtime() + datetime.timedelta(seconds = 0)
 			get_blog_user.blog_post_set.create(blog_title = get_blog_title, blog_text = get_blog_text, blog_image = get_blog_image, date_publish = get_date_publish)
 			
-			return redirect('uProfile',permanent = True)
-
-
+			return redirect('blogProfile:uProfile',permanent = True)
 	context = {"form":form,"title":"POST BLOG",'present_year':timezone.localtime().year}
 	return render(request,'blogPost/blog_post.html',context) 
+
+
+def blog_view_profile_page_view(request):
+	try:
+		get_blog_user = request.session['temp_view_profile_id']
+	except:
+		return redirect('base')
+	else:
+		get_blog_user = Blog_Users.objects.get(id = request.session['temp_view_profile_id'])
+		get_view_user_joined_date = get_blog_user.date_joined
+		get_view_username = get_blog_user.username
+		get_view_user_id = request.session['temp_view_profile_id']
+		blog_list_published = Blog_Post.objects.filter(user = get_view_user_id,date_publish__lte = timezone.localtime()).order_by("-date_publish")
+		blog_list_pending = Blog_Post.objects.filter(user = get_view_user_id,date_publish__gt = timezone.localtime()).order_by("date_publish")
+		context = {'blog_list_published':blog_list_published,'blog_list_pending':blog_list_pending,'blog_view_username':get_view_username,'date_joined':get_view_user_joined_date,'present_year':timezone.localtime().year}
+		return render(request,'blogPost/blog_vProfile.html',context)
 
 
 

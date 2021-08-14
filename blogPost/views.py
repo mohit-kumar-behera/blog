@@ -70,29 +70,13 @@ def blog_home_page_view(request):
 					get_user = Blog_Users.objects.get(id = request.session['temp_view_profile_id'])
 					get_username = get_user.username
 					if get_username == request.session['sessUsername']:
-						return redirect('/blogs/profile/',permanent = True)
+						return redirect('blogProfile:uProfile',permanent = True)
 					else:
-						return redirect('viewProfile', permanent = True)
+						return redirect('blogProfile:vProfile', permanent = True)
 
 				context = {'blog_list':blog_list,'blog_pending_list':blog_pending_list,'year':timezone.localtime().year} 
 				return render(request,'blogPost/blogs.html',context)
 		else:
 			return redirect("base")
-
-
-def blog_view_profile_page_view(request):
-	try:
-		get_blog_user = request.session['temp_view_profile_id']
-	except:
-		return redirect('base')
-	else:
-		get_blog_user = Blog_Users.objects.get(id = request.session['temp_view_profile_id'])
-		get_view_user_joined_date = get_blog_user.date_joined
-		get_view_username = get_blog_user.username
-		get_view_user_id = request.session['temp_view_profile_id']
-		blog_list_published = Blog_Post.objects.filter(user = get_view_user_id,date_publish__lte = timezone.localtime()).order_by("-date_publish")
-		blog_list_pending = Blog_Post.objects.filter(user = get_view_user_id,date_publish__gt = timezone.localtime()).order_by("date_publish")
-		context = {'blog_list_published':blog_list_published,'blog_list_pending':blog_list_pending,'blog_view_username':get_view_username,'date_joined':get_view_user_joined_date,'present_year':timezone.localtime().year}
-		return render(request,'blogPost/blog_vProfile.html',context)
 
 
