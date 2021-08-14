@@ -10,14 +10,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
- <!-- <link rel="stylesheet" type="text/css" href="{% static 'blogPost/bloghomestyle.css' %}">-->
-  <link rel="stylesheet" type="text/css" href="/static/blogPost/bloghomestyle.css?{% now 'U' %}"><!-- {% now 'U' %} refreshes the css code every time the page is refreshed-->
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bloghomestyle.css' %}?{% now 'U' %}">
 </head>
 <body>
 
 {% include 'blogPost/navbar.html' %} 
-
-{% block content %}
-{% endblock content %}
+{% block content %} {% endblock content %}
 </body>
 </html>
